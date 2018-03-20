@@ -2,7 +2,7 @@
 "use strict";
 require('dotenv').config();
 
-// dependencies
+// Dependencies
 const express       = require('express');
 const bodyParser    = require("body-parser");
 const request       = require('request-promise');
@@ -42,7 +42,7 @@ const getBusCords = ({ rows }) => rows.map(r => {
     direction: r.direction
   }
 });
-
+// Retrives stopNo from API and stores in /liveBusAPI
 const getLiveBusCoord = stopNo => {
   var liveBusApi = `http://api.translink.ca/rttiapi/v1/buses?apikey=GMPEN4nbnZxrUBYQYkVh`
   return request({
@@ -85,6 +85,7 @@ app.get('/busStopRoutes', (req, res) => {
   })
 })
 
+// Stores bus coordination in localhost:3000/buses_coord
 app.get('/buses_coord', (req, res) =>{
   const { lat, lng } = req.query;
   const sqlQuery = `SELECT *
@@ -101,6 +102,8 @@ app.get('/buses_coord', (req, res) =>{
     })
 })
 
+// Stores bus stop locations and outputs the longitude and latitude of each bus within a radius
+// Using POSTGIS
 app.get('/get_stops_in_proximity', (req, res) => {
   const { lat, lng } = req.query;
   const sqlQuery = `SELECT *
@@ -116,7 +119,7 @@ app.get('/get_stops_in_proximity', (req, res) => {
       res.json(stops)
     })
 })
-
+// Server is running in port 3000, and liveBusData is constantly being updated every 5 seconds
 app.listen(3000, () => {
   setInterval(liveBusData, 5000);
   console.log(`Server listening on port ${PORT} in ${ENV} mode.`);
