@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+
+build/
+node_modules/
+
+npm-debug.log
+*.ttf
+
+package.json
+
+google maps api key: AIzaSyD0nqbNJan44IZwL91Jjg1BwA2kN4UKW1g
